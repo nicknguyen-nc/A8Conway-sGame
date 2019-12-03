@@ -34,7 +34,7 @@ public class JSpotBoard extends JPanel implements SpotBoard {
 	private Spot[][] _spots;
 	
 	public JSpotBoard(int width, int height) {
-		if (width < 1 || height < 1 || width > 50 || height > 50) {
+		if (width < 1 || height < 1 || width > 500 || height > 500) {
 			throw new IllegalArgumentException("Illegal spot board geometry");
 		}
 		setLayout(new GridLayout(height, width));

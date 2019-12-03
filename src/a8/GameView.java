@@ -66,8 +66,8 @@ public class GameView extends JPanel implements ChangeListener, ActionListener, 
 				dimensionChooserPanel.setLayout(new BorderLayout());
 				xSlider = new JSlider(10, 500, 10);
 				ySlider = new JSlider(10, 500, 10);
-				dimensionChooserPanel.add(xSlider, BorderLayout.EAST);
-				dimensionChooserPanel.add(ySlider,BorderLayout.WEST);
+				dimensionChooserPanel.add(xSlider, BorderLayout.WEST);
+				dimensionChooserPanel.add(ySlider,BorderLayout.EAST);
 				
 				
 				// message to display what the current dimensions are
@@ -91,7 +91,11 @@ public class GameView extends JPanel implements ChangeListener, ActionListener, 
 	}
 
 	public void resetGame() {
+		this.remove(board);
 		board = new JSpotBoard(sBoardWidth, sBoardHeight);
+		board.addSpotListener(this);
+		this.add(board,BorderLayout.CENTER);
+		this.revalidate();;
 	}
 
 	@Override
@@ -114,13 +118,21 @@ public class GameView extends JPanel implements ChangeListener, ActionListener, 
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		resetGame();
 		
 	}
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
-		// TODO Auto-generated method stub
+		sBoardWidth = xSlider.getValue();
+		sBoardHeight = ySlider.getValue();
+		
+		if (!((JSlider) e.getSource()).getValueIsAdjusting()) {
+			for (ChangeListener l : change_listeners) {
+				l.stateChanged(new ChangeEvent(this));
+			}
+		}
+	
 		
 	}
 		
