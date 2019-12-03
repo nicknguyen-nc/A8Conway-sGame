@@ -1,6 +1,6 @@
 package a8;
 
-import java.awt.event.ActionListener;
+import java.awt.event.ActionListener; 
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +23,8 @@ public class GameView extends JPanel implements ChangeListener, ActionListener, 
 	private JSpotBoard board; //Spotboard play area
 	private JLabel message; // Label for messages
 	private JPanel button_panel;
-	
+	private JButton resetButton;
+	private JButton advanceButton;
 
 	private JSlider xSlider;
 	private JSlider ySlider;
@@ -31,6 +32,13 @@ public class GameView extends JPanel implements ChangeListener, ActionListener, 
 	private int sBoardHeight = 10;
 	private JLabel dimensionLabel;
 	List<ChangeListener> change_listeners;
+	
+	// buttons for presets
+	
+	private JButton
+	private JButton
+	private JButton
+	
 	
 	public GameView() {
 		// create spotboard and message label
@@ -48,9 +56,12 @@ public class GameView extends JPanel implements ChangeListener, ActionListener, 
 				
 				// reset button and ourselves as action listener
 				
-				JButton resetButton = new JButton("Restart");
+				resetButton = new JButton("Restart");
 				resetButton.addActionListener(this);
-				resetMessagePanel.add(resetButton, BorderLayout.EAST);
+				advanceButton = new JButton("Advance");
+				advanceButton.addActionListener(this);
+				resetMessagePanel.add(advanceButton, BorderLayout.EAST);
+				resetMessagePanel.add(resetButton, BorderLayout.SOUTH);
 				resetMessagePanel.add(message, BorderLayout.CENTER);
 				
 				// Add subpanel in south area of layout
@@ -64,21 +75,31 @@ public class GameView extends JPanel implements ChangeListener, ActionListener, 
 				
 				JPanel dimensionChooserPanel = new JPanel();
 				dimensionChooserPanel.setLayout(new BorderLayout());
+			
 				xSlider = new JSlider(10, 500, 10);
 				ySlider = new JSlider(10, 500, 10);
 				dimensionChooserPanel.add(xSlider, BorderLayout.WEST);
 				dimensionChooserPanel.add(ySlider,BorderLayout.EAST);
-				
+				xSlider.addChangeListener(this);
+				ySlider.addChangeListener(this);
 				
 				// message to display what the current dimensions are
 				dimensionChooserPanel.add(dimensionLabel, BorderLayout.SOUTH);
 				
 				
 				add(dimensionChooserPanel,BorderLayout.EAST);
-				xSlider.addChangeListener(this);
-				ySlider.addChangeListener(this);
+				
+				//create panel to house preset board layouts
+				
+				JPanel presetButtonPanel = new JPanel();
+				
 				
 				change_listeners = new ArrayList<ChangeListener>();
+				
+				
+				
+				
+				
 				resetGame();			
 	}
 	
@@ -92,10 +113,15 @@ public class GameView extends JPanel implements ChangeListener, ActionListener, 
 
 	public void resetGame() {
 		this.remove(board);
+		
 		board = new JSpotBoard(sBoardWidth, sBoardHeight);
 		board.addSpotListener(this);
+		
+		
 		this.add(board,BorderLayout.CENTER);
-		this.revalidate();;
+		message.setText("Instructions:");
+		dimensionLabel.setText("Current X Dimension: " + sBoardWidth + " Current Y Dimension: " + sBoardHeight);
+		this.revalidate();
 	}
 
 	@Override
@@ -106,19 +132,22 @@ public class GameView extends JPanel implements ChangeListener, ActionListener, 
 
 	@Override
 	public void spotEntered(Spot spot) {
-		// TODO Auto-generated method stub
+		spot.highlightSpot();
 		
 	}
 
 	@Override
 	public void spotExited(Spot spot) {
-		// TODO Auto-generated method stub
+		spot.unhighlightSpot();
 		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		resetGame();
+		if(e.getSource() == resetButton) { 	
+			resetGame();
+		}
+		
 		
 	}
 
@@ -132,10 +161,14 @@ public class GameView extends JPanel implements ChangeListener, ActionListener, 
 				l.stateChanged(new ChangeEvent(this));
 			}
 		}
+		
+		
+	
+		resetGame();
 	
 		
 	}
 		
 	
-		
+		// important method for the auto clicker resetButton.doClick();
 }
