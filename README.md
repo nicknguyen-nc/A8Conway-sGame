@@ -1,5 +1,29 @@
 # A8Conway-sGame
 
+
+To run the game open the GamePlayer class (it serves as the main) and run it.
+Note: Setting large dimensions for the spotboard will cause the program to run very slowly, but it will eventually catch up
+Note 2: T Set custom birth and survive thresholds, first slide the slider as desired, then click the set threshold button
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Extra Credit Criteria:
 I was hoping to have a working version of A8 before announcing it, but as I haven't had time to get that done and we are running out of time otherwise, below is a description of what is expected of A8 so that anyone interested in doing it can get started.
 
 A8 should be an implementation of Conway's Game of Life. A description of the game can be found here:
