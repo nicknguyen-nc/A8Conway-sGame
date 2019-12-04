@@ -5,7 +5,20 @@ To run the game open the GamePlayer class (it serves as the main) and run it.
 Note: Setting large dimensions for the spotboard will cause the program to run very slowly, but it will eventually catch up
 Note 2: To Set custom birth and survive thresholds, first slide the slider as desired, then click the set threshold button
 
-
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
 
 
 
