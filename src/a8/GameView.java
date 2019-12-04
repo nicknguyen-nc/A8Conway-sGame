@@ -35,9 +35,9 @@ public class GameView extends JPanel implements ChangeListener, ActionListener, 
 	
 	// buttons for presets
 	
-	private JButton
-	private JButton
-	private JButton
+	private JButton clearButton;
+	private JButton randomizeButton;
+
 	
 	
 	public GameView() {
@@ -92,7 +92,15 @@ public class GameView extends JPanel implements ChangeListener, ActionListener, 
 				//create panel to house preset board layouts
 				
 				JPanel presetButtonPanel = new JPanel();
+				presetButtonPanel.setLayout(new BorderLayout());
+				randomizeButton = new JButton("Randomize Board");
+				clearButton = new JButton("Clear Board");
+				clearButton.addActionListener(this);
+				randomizeButton.addActionListener(this);
+				presetButtonPanel.add(clearButton,BorderLayout.EAST);
+				presetButtonPanel.add(randomizeButton, BorderLayout.WEST);
 				
+				add(presetButtonPanel, BorderLayout.WEST);
 				
 				change_listeners = new ArrayList<ChangeListener>();
 				
