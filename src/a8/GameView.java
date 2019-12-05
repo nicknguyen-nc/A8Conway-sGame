@@ -33,7 +33,7 @@ public class GameView extends JPanel  /*implements ChangeListener , ActionListen
 	
 	private JSlider birthSlider;
 	private JSlider surviveSlider;
-	private JButton thresholdButton;
+
 	JLabel thresholdLabel;
 	
 	private int sBoardWidth = 10;
@@ -55,9 +55,10 @@ public class GameView extends JPanel  /*implements ChangeListener , ActionListen
 	
 	
 	// stuff for auto
-	private JButton AutoStarStopButton;
-	private JLabel DelayTimer;
-	private int delay;
+	private JButton autoButton;
+	private JLabel delayLabel;
+	private JSlider delaySlider;
+
 	
 	public GameView() {
 		// create spotboard and message label
@@ -102,18 +103,22 @@ public class GameView extends JPanel  /*implements ChangeListener , ActionListen
 				JPanel dimensionChooserPanel = new JPanel();
 				dimensionChooserPanel.setLayout(new BorderLayout());
 				birthSlider = new JSlider (1, 8, 3);
+				birthSlider.setToolTipText("birthSlider");
 				surviveSlider = new JSlider (1, 8, 2);
-				thresholdButton = new JButton("Click to Set Survival, Birth Thresholds");
+				surviveSlider.setToolTipText("surviveSlider");
+
 				thresholdLabel = new JLabel();
 				xSlider = new JSlider(10, 500, 10);
+				xSlider.setToolTipText("xSlider");
 				ySlider = new JSlider(10, 500, 10);
+				ySlider.setToolTipText("ySlider");
 				dimensionChooserPanel.add(xSlider, BorderLayout.WEST);
 				dimensionChooserPanel.add(ySlider,BorderLayout.EAST);
 				
 				birthSurvivePanel.add(surviveSlider, BorderLayout.WEST);
 				birthSurvivePanel.add(birthSlider, BorderLayout.EAST);
-				birthSurvivePanel.add(thresholdButton, BorderLayout.SOUTH);
-				birthSurvivePanel.add(thresholdLabel, BorderLayout.NORTH);
+
+				birthSurvivePanel.add(thresholdLabel, BorderLayout.SOUTH);
 		//		xSlider.addChangeListener(this);
 		//		ySlider.addChangeListener(this);
 				
@@ -125,7 +130,8 @@ public class GameView extends JPanel  /*implements ChangeListener , ActionListen
 				dimensionThresholdPanel.add(birthSurvivePanel,BorderLayout.EAST);
 				add(dimensionThresholdPanel,BorderLayout.EAST);
 				//create panel to house preset board layouts
-				
+				JPanel presetTimerPanel = new JPanel();
+				presetTimerPanel.setLayout(new BorderLayout());
 				JPanel presetButtonPanel = new JPanel();
 				presetButtonPanel.setLayout(new BorderLayout());
 				randomizeButton = new JButton("Randomize Board");
@@ -135,8 +141,24 @@ public class GameView extends JPanel  /*implements ChangeListener , ActionListen
 				presetButtonPanel.add(clearButton,BorderLayout.EAST);
 				presetButtonPanel.add(randomizeButton, BorderLayout.WEST);
 				
-				add(presetButtonPanel, BorderLayout.WEST);
+				JPanel timerPanel = new JPanel();
+				timerPanel.setLayout(new BorderLayout());
 				
+				
+				delaySlider = new JSlider(10, 1000, 10);
+				delayLabel = new JLabel("Your Current Delay is " + getDelay() + " Milliseconds");
+				delaySlider.setToolTipText("Minimimum is 10 milliseconds, Maximum is 1 second");
+				autoButton = new JButton("Start");
+			
+				
+				timerPanel.add(delaySlider, BorderLayout.CENTER);
+				timerPanel.add(delayLabel, BorderLayout.NORTH);
+				timerPanel.add(autoButton, BorderLayout.SOUTH);
+				
+				
+				presetTimerPanel.add(presetButtonPanel, BorderLayout.WEST);
+				presetTimerPanel.add(timerPanel, BorderLayout.EAST);
+				add(presetTimerPanel,BorderLayout.WEST);
 		
 				/*
 				setLayout(this.getLayout());
@@ -166,7 +188,12 @@ public class GameView extends JPanel  /*implements ChangeListener , ActionListen
 	}
 	*/
 
-
+	public JButton getAdvanceButton() {
+		return advanceButton;
+	}
+	public JLabel getDelayLabel() {
+		return delayLabel;
+	}
 	public void resetGame(JSpotBoard board) {
 		remove(this.board);
 		this.board = board;
@@ -243,6 +270,12 @@ public class GameView extends JPanel  /*implements ChangeListener , ActionListen
 	public int getSurvive() {
 		return surviveSlider.getValue();
 	}
+	
+	public int getDelay() {
+		return delaySlider.getValue();
+	}
+	
+
 	public JSpotBoard getBoard() {
 		return board;
 	}
@@ -272,7 +305,9 @@ public class GameView extends JPanel  /*implements ChangeListener , ActionListen
 
 		randomizeButton.addActionListener(listenerForButton);
 		clearButton.addActionListener(listenerForButton);
-		thresholdButton.addActionListener(listenerForButton);
+		
+		autoButton.addActionListener(listenerForButton);
+		
 	}
 	
 	void addTorusListener(ActionListener listenerForTorus) {
@@ -282,6 +317,9 @@ public class GameView extends JPanel  /*implements ChangeListener , ActionListen
 	void addSliderListener(ChangeListener listenerForSliders) {
 		xSlider.addChangeListener(listenerForSliders);
 		ySlider.addChangeListener(listenerForSliders);
+		delaySlider.addChangeListener(listenerForSliders);
+		birthSlider.addChangeListener(listenerForSliders);
+		surviveSlider.addChangeListener(listenerForSliders);
 		
 	}
 	

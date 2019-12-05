@@ -17,7 +17,7 @@ public class GameController {
 	
 	private GameView theView;
 	private GameModel theModel;
-	private JCheckBox exCheck;
+	private PlayTimer playTimer;
 	
 	public GameController(GameView theView, GameModel theModel) {
 		this.theModel = theModel;
@@ -48,15 +48,27 @@ public class GameController {
 				theView.resetGame(new JSpotBoard(theView.getBoardWidth(),theView.getBoardHeight()));
 				theView.addSpotListener(new SpotBoardListener());
 			}
-			
-			if(((JButton)e.getSource()).getText() == "Click to Set Survival, Birth Thresholds") {
-				theModel.setBirthThreshold(theView.getBirth());
-				theModel.setSurviveThreshold(theView.getSurvive());
-				theView.thresholdLabel.setText("Survival Threshold: " + theView.getSurvive() + " Birth Threshold: "+ theView.getBirth());
+			// theView.getDelay();
+			if(((JButton)e.getSource()).getText() == "Start") {
+				playTimer = new PlayTimer(theView, theView.getDelay());
+				playTimer.start();
+				((JButton)e.getSource()).setText("Stop");
+				((JButton)e.getSource()).revalidate();
+				return;
 			}
+			if(((JButton)e.getSource()).getText() == "Stop") {
+				playTimer.halt();
+				((JButton)e.getSource()).setText("Start");
+				((JButton)e.getSource()).revalidate();
+				return;
+			}
+			
+
 		}
 		
 	}
+	
+	
 	
 	class TorusCheckListener implements ActionListener {
 
@@ -104,10 +116,27 @@ public class GameController {
 	
 		@Override
 		public void stateChanged(ChangeEvent e) {
-		theView.setBoardWidth();
-		theView.setBoardHeight();
-		theView.resetGame(new JSpotBoard(theView.getBoardWidth(),theView.getBoardHeight()));
-		theView.addSpotListener(new SpotBoardListener());
+			if(((JSlider)e.getSource()).getToolTipText() == "xSlider" || ((JSlider)e.getSource()).getToolTipText() == "ySlider") {
+				theView.setBoardWidth();
+				theView.setBoardHeight();
+				theView.resetGame(new JSpotBoard(theView.getBoardWidth(),theView.getBoardHeight()));
+				theView.addSpotListener(new SpotBoardListener());
+
+			}
+			if(((JSlider)e.getSource()).getToolTipText() == "Minimimum is 10 milliseconds, Maximum is 1 second") {
+				theView.getDelayLabel().setText("Your Current Delay is " + theView.getDelay() + " Milliseconds"); 
+			}
+			
+			if(((JSlider)e.getSource()).getToolTipText() == "birthSlider") {
+				theModel.setBirthThreshold(theView.getBirth());
+				theModel.setSurviveThreshold(theView.getSurvive());
+				theView.thresholdLabel.setText("Survival Threshold: " + theView.getSurvive() + " Birth Threshold: "+ theView.getBirth());
+			}
+			if(((JSlider)e.getSource()).getToolTipText() == "surviveSlider") {
+				theModel.setBirthThreshold(theView.getBirth());
+				theModel.setSurviveThreshold(theView.getSurvive());
+				theView.thresholdLabel.setText("Survival Threshold: " + theView.getSurvive() + " Birth Threshold: "+ theView.getBirth());
+			}
 			if (!((JSlider) e.getSource()).getValueIsAdjusting()) {
 				for (ChangeListener l : theView.getChangeListenerList()) {
 					l.stateChanged(new ChangeEvent(this));
