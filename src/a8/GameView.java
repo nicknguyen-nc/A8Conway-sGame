@@ -54,6 +54,11 @@ public class GameView extends JPanel  /*implements ChangeListener , ActionListen
 	private JButton setThresholdsButton;
 	
 	
+	// stuff for auto
+	private JButton AutoStarStopButton;
+	private JLabel DelayTimer;
+	private int delay;
+	
 	public GameView() {
 		// create spotboard and message label
 				board = new JSpotBoard(10,10);
@@ -277,6 +282,7 @@ public class GameView extends JPanel  /*implements ChangeListener , ActionListen
 	void addSliderListener(ChangeListener listenerForSliders) {
 		xSlider.addChangeListener(listenerForSliders);
 		ySlider.addChangeListener(listenerForSliders);
+		
 	}
 	
 
