@@ -8,8 +8,8 @@ import javax.swing.JPanel;
 // READ THIS
 // Run this class to play the game
 // NOTE: Large dimensions for the spotboard cause the program to run slowly, but it still will eventually work
-
-public class GamePlayer {
+// NOTE 2: TO Set custom birth and survive thresholds, first slide the slider as desired, then click the set threshold button
+public class Main {
 	public static void main(String[] args) {
 		GameView view = new GameView();
 		GameModel model = new GameModel();
