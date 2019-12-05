@@ -1,7 +1,7 @@
 # A8Conway-sGame
 
 
-To run the game open the GamePlayer class (it serves as the main) and run it.
+To run the game open the Main class (it serves as the main) and run it.
 Note: Setting large dimensions for the spotboard will cause the program to run very slowly, but it will eventually catch up
 
 Note 3: To enable Torus Mode check the Torus Mode 
